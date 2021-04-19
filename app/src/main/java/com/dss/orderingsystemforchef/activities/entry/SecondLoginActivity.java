@@ -17,7 +17,7 @@ import com.dss.orderingsystemforchef.network.results.LoginResult;
 import com.dss.orderingsystemforchef.network.results.Result;
 import com.dss.orderingsystemforchef.network.UserService;
 import com.dss.orderingsystemforchef.util.FileUtil;
-import com.dss.orderingsystemforchef.util.ServiceCreator;
+import com.dss.orderingsystemforchef.network.ServiceCreator;
 import com.github.cirno_poi.verifyedittextlibrary.VerifyEditText;
 
 import retrofit2.Call;

@@ -12,11 +12,11 @@
     <color name="theme">#ff3d00</color>
     <color name="theme_variant">#dd2c00</color>
 
+    <color name="subtitle_bg">#ffecb3</color>
     <color name="amber_a400">#ffc400</color>
     <color name="amber_a700">#ffab00</color>
 
     <color name="grey_light">#FAF8F7</color>
     <color name="grey_ripple">#bdbdbd</color>
     <color name="default_text_color">#a0a0a0</color>
-    <color name="functional_text">#304ffe</color>
 </resources>

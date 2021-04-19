@@ -22,31 +22,50 @@ import com.dss.orderingsystemforchef.activities.DishesEditingActivity;
 import com.dss.orderingsystemforchef.adapter.DishesAdapter;
 import com.dss.orderingsystemforchef.adapter.SidebarAdapter;
 import com.dss.orderingsystemforchef.entity.Dish;
+import com.dss.orderingsystemforchef.network.MCallback;
+import com.dss.orderingsystemforchef.network.UserService;
+import com.dss.orderingsystemforchef.network.results.Result;
+import com.dss.orderingsystemforchef.network.ServiceCreator;
 import com.dss.orderingsystemforchef.util.phone.Phone1;
 import com.kongzue.dialog.listener.InputDialogOkButtonClickListener;
 import com.kongzue.dialog.v2.InputDialog;
 import com.kongzue.dialog.v2.SelectDialog;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MenuFragment extends Fragment {
     private final String TAG = "MenuFragment";
-
+    /**
+     * context
+     */
     private Context context;
-
     /**
      * fragment 绑定的布局
      */
     private View root;
 
-    // 两个列表的 adapter
+    /**
+     * 侧边分组列表的 adapter
+     */
     private SidebarAdapter sidebarAdapter;
+    /**
+     * 分组下的菜品列表 adapter
+     */
     private DishesAdapter dishesAdapter;
-    // 两个列表的数据集
+    /**
+     * 分组列表的数据集
+     */
     private List<String> sidebarData = new LinkedList<>();
+    /**
+     * 菜品列表的数据集
+     */
     private List<Dish> dishesData = new LinkedList<>();
+
 
     // 测试数据
     {
@@ -58,10 +77,10 @@ public class MenuFragment extends Fragment {
         dish.setDescription("富含优质动物蛋白，老少咸宜");
         dish.setGroupId(2);
         List<Dish.Ingredient> ingre = new LinkedList<>();
-        ingre.add(new Dish.Ingredient("包菜","/把",2));
-        ingre.add(new Dish.Ingredient("包菜","/把",3));
-        ingre.add(new Dish.Ingredient("包菜","/把",1));
-        ingre.add(new Dish.Ingredient("包菜","/把",4));
+        ingre.add(new Dish.Ingredient("包菜", "/把", 2));
+        ingre.add(new Dish.Ingredient("包菜", "/把", 3));
+        ingre.add(new Dish.Ingredient("包菜", "/把", 1));
+        ingre.add(new Dish.Ingredient("包菜", "/把", 4));
         dish.setName("包菜烤盘");
         dish.setIngredients(ingre);
         dish.setPicUrl("http://img.inaction.fun/static/ss/25101.jpg");
@@ -89,7 +108,7 @@ public class MenuFragment extends Fragment {
         TextView addGroupBtn = root.findViewById(R.id.addGroup);
         TextView addItemBtn = root.findViewById(R.id.addItem);
 
-        //Context
+        // Context
         context = getContext();
 
         // 菜单栏列表的适配器
@@ -113,10 +132,10 @@ public class MenuFragment extends Fragment {
         sidebarAdapter.setSidebarLongClickPhone(new Phone1<Integer>() {
             @Override
             public void onPhone(Integer position) {
-                SelectDialog.show(context, "删除分组", "确定要删除\""+sidebarData.get(position)+"\"分组和分组下的所有菜品吗？", new DialogInterface.OnClickListener() {
+                SelectDialog.show(context, "删除分组", "确定要删除\"" + sidebarData.get(position) + "\"分组和分组下的所有菜品吗？", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        sidebarData.remove((int)position);
+                        sidebarData.remove((int) position);
                         sidebarAdapter.notifyItemRemoved(position);
                     }
                 });
@@ -131,10 +150,19 @@ public class MenuFragment extends Fragment {
                 InputDialog.show(context, "增加分组", "给新的分组取个名字吧", new InputDialogOkButtonClickListener() {
                     @Override
                     public void onClick(Dialog dialog, String inputText) {
-                        if(!inputText.equals("")){
+                        if (!inputText.equals("")) {
                             // 增加一个分组
                             sidebarData.add(inputText);
-                            sidebarAdapter.notifyItemInserted(sidebarData.size()-1);
+                            sidebarAdapter.notifyItemInserted(sidebarData.size() - 1);
+                            // 网络请求，封装过的
+                            ServiceCreator.createService(UserService.class).addGroup(inputText)
+                                    .enqueue(new MCallback<Result>() {
+                                        @Override
+                                        public void onSuccess(Result result) {
+                                            Log.i(TAG, "onSuccess: 请求成功！添加的分组为："+inputText);
+                                        }
+                                    });
+
                         }
                     }
                 });
@@ -147,7 +175,7 @@ public class MenuFragment extends Fragment {
                 InputDialog.show(context, "新增菜品", "请输入新增菜品的名字", new InputDialogOkButtonClickListener() {
                     @Override
                     public void onClick(Dialog dialog, String inputText) {
-                        if(!inputText.equals("")){
+                        if (!inputText.equals("")) {
                             // 跳转菜品编辑页
                             Intent jumpIntent = new Intent(context, DishesEditingActivity.class);
                             jumpIntent.putExtra("dishName", inputText);
@@ -165,6 +193,7 @@ public class MenuFragment extends Fragment {
 
     /**
      * 电子侧边栏的一项，更新右侧菜品数据
+     *
      * @param groupId 侧边栏分组序号
      */
     private void refreshDishesData(int groupId) {
@@ -176,7 +205,6 @@ public class MenuFragment extends Fragment {
 
         dishesAdapter.notifyDataSetChanged();
     }
-
 
 
 }

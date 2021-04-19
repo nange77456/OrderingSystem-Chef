@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -32,5 +33,14 @@ public interface UserService {
     @POST("/user/login")
     Call<LoginResult> login(@Field("tel") String tel, @Field("verifyCode") String verifyCode);
 
+    /**
+     * 新建分组
+     * @param name 分组名
+     * @return 分组id
+     */
+    @FormUrlEncoded
+    @POST("/dish/group/add")
+    Call<Result> addGroup(@Field("name") String name);
 
+    Call<Result> addDish();
 }

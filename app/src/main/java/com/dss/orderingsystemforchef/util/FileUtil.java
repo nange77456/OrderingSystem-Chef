@@ -28,9 +28,14 @@ public class FileUtil {
         return preferences.getString("userID","-1");
     }
 
+    /**
+     * 删除缓存的userID
+     * @param id
+     */
     public static void deleteUserID(String id){
         SharedPreferences preferences = MyApplication.context.getSharedPreferences("userdata", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
+        // TODO 不太对
         editor.clear();
         editor.apply();
     }

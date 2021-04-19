@@ -59,17 +59,15 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.ViewHolder
         holder.nameView.setText(item.getName());
         holder.priceView.setText("￥"+item.getPrice());
         holder.positiveRateView.setText("好评度"+item.getPositiveRate());
+        if (item.getIngredients() != null) {
+            holder.ingredientsView.setText(item.getIngredients().toString());
+        }
 
-//        holder.imageView.setImageResource(R.drawable.lucky);
-
+        // 用 Glide 加载图片
         if(item.getPicUrl() != null){
             Glide.with(holder.view)
                     .load(item.getPicUrl())
                     .into(holder.imageView);
-        }
-
-        if (item.getIngredients() != null) {
-            holder.ingredientsView.setText(item.getIngredients().toString());
         }
 
     }
