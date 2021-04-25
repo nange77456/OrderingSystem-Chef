@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Ordering System for Chef</string>
+    <!--    <string name="app_name">点餐系统厨师端</string>-->
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
@@ -15,5 +16,6 @@
     <string name="title_page1">订单管理</string>
     <string name="title_page2">菜品上下架管理</string>
     <string name="title_page3">顾客反馈</string>
-    <!--    <string name="app_name">点餐系统厨师端</string>-->
+    <string name="error_null">此项不能为空</string>
+    <string name="error_max_words">超出最大字数限制</string>
 </resources>

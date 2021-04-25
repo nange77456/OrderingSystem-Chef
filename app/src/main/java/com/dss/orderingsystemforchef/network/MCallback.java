@@ -12,6 +12,7 @@ import retrofit2.Response;
 
 /**
  * 网络请求中Callback的封装
+ * ：用户只需要重写 onSuccess() 方法
  */
 public abstract class MCallback <T extends Result> implements Callback<T> {
     private final String TAG = "MCallback";

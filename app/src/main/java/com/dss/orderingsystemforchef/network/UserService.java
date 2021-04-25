@@ -7,12 +7,11 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.HEAD;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
- * Retrofit2 网络请求需要用到的接口
+ * 用户相关的的网络请求，retrofit2
  */
 public interface UserService {
     /**
@@ -32,15 +31,4 @@ public interface UserService {
     @FormUrlEncoded
     @POST("/user/login")
     Call<LoginResult> login(@Field("tel") String tel, @Field("verifyCode") String verifyCode);
-
-    /**
-     * 新建分组
-     * @param name 分组名
-     * @return 分组id
-     */
-    @FormUrlEncoded
-    @POST("/dish/group/add")
-    Call<Result> addGroup(@Field("name") String name);
-
-    Call<Result> addDish();
 }

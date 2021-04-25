@@ -22,8 +22,12 @@ import com.dss.orderingsystemforchef.activities.DishesEditingActivity;
 import com.dss.orderingsystemforchef.adapter.DishesAdapter;
 import com.dss.orderingsystemforchef.adapter.SidebarAdapter;
 import com.dss.orderingsystemforchef.entity.Dish;
+import com.dss.orderingsystemforchef.network.DishService;
+import com.dss.orderingsystemforchef.network.results.DishListResult;
+import com.dss.orderingsystemforchef.network.results.GroupIDResult;
+import com.dss.orderingsystemforchef.network.results.GroupItem;
 import com.dss.orderingsystemforchef.network.MCallback;
-import com.dss.orderingsystemforchef.network.UserService;
+import com.dss.orderingsystemforchef.network.results.GroupListResult;
 import com.dss.orderingsystemforchef.network.results.Result;
 import com.dss.orderingsystemforchef.network.ServiceCreator;
 import com.dss.orderingsystemforchef.util.phone.Phone1;
@@ -34,15 +38,8 @@ import com.kongzue.dialog.v2.SelectDialog;
 import java.util.LinkedList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class MenuFragment extends Fragment {
     private final String TAG = "MenuFragment";
-    /**
-     * context
-     */
     private Context context;
     /**
      * fragment 绑定的布局
@@ -60,43 +57,16 @@ public class MenuFragment extends Fragment {
     /**
      * 分组列表的数据集
      */
-    private List<String> sidebarData = new LinkedList<>();
+    private List<GroupItem> sidebarData = new LinkedList<>();    // 在这new列表避免空指针问题，之后的操作都用clear和add
     /**
      * 菜品列表的数据集
      */
     private List<Dish> dishesData = new LinkedList<>();
+    /**
+     * 网络请求接口的实例
+     */
+    DishService dishService = ServiceCreator.createService(DishService.class);
 
-
-    // 测试数据
-    {
-        sidebarData.add("分类一");
-        sidebarData.add("分类二");
-        sidebarData.add("分类三");
-
-        Dish dish = new Dish();
-        dish.setDescription("富含优质动物蛋白，老少咸宜");
-        dish.setGroupId(2);
-        List<Dish.Ingredient> ingre = new LinkedList<>();
-        ingre.add(new Dish.Ingredient("包菜", "/把", 2));
-        ingre.add(new Dish.Ingredient("包菜", "/把", 3));
-        ingre.add(new Dish.Ingredient("包菜", "/把", 1));
-        ingre.add(new Dish.Ingredient("包菜", "/把", 4));
-        dish.setName("包菜烤盘");
-        dish.setIngredients(ingre);
-        dish.setPicUrl("http://img.inaction.fun/static/ss/25101.jpg");
-
-        dishesData.add(dish);
-
-        Dish dd = new Dish();
-        dd.setName("回味鸡拉面");
-        dd.setGroupId(0);
-        dishesData.add(dd);
-
-        Dish ddd = new Dish();
-        ddd.setName("双拼鸡排饭");
-        ddd.setGroupId(2);
-        dishesData.add(ddd);
-    }
 
     @Nullable
     @Override
@@ -107,32 +77,47 @@ public class MenuFragment extends Fragment {
         RecyclerView dishesRecyclerView = root.findViewById(R.id.dishesList);
         TextView addGroupBtn = root.findViewById(R.id.addGroup);
         TextView addItemBtn = root.findViewById(R.id.addItem);
-
         // Context
         context = getContext();
 
-        // 菜单栏列表的适配器
+        // 分组adapter
         sidebarAdapter = new SidebarAdapter(sidebarData);
         sidebarRecyclerView.setAdapter(sidebarAdapter);
         sidebarRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-        // 菜品列表的适配器
+        // 菜品adapter
         dishesAdapter = new DishesAdapter(dishesData);
         dishesRecyclerView.setAdapter(dishesAdapter);
         dishesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        // 菜单栏数据初始化
+        dishService.getAllGroup().enqueue(new MCallback<GroupListResult>() {
+            @Override
+            public void onSuccess(GroupListResult result) {
+                sidebarData.addAll(result.getGroupList());
+                // 刷新数据
+                sidebarAdapter.notifyDataSetChanged();
+
+                // 菜品列表初始化
+                if (sidebarData.size() > 0) {
+                    refreshDishesData(sidebarData.get(0).getId());
+                }
+            }
+        });
+
 
         // 菜单栏的点击回调方法的定义，刷新右侧菜品列表
         sidebarAdapter.setSidebarClickPhone(new Phone1<Integer>() {
             @Override
             public void onPhone(Integer position) {
-                refreshDishesData(position);
+                refreshDishesData(sidebarData.get(position).getId());
             }
         });
+
         // 菜单栏的长按回调方法的定义，删除分组
         sidebarAdapter.setSidebarLongClickPhone(new Phone1<Integer>() {
             @Override
             public void onPhone(Integer position) {
-                SelectDialog.show(context, "删除分组", "确定要删除\"" + sidebarData.get(position) + "\"分组和分组下的所有菜品吗？", new DialogInterface.OnClickListener() {
+                SelectDialog.show(context, "删除分组", "确定要删除 \"" + sidebarData.get(position).getName() + "\" 分组和分组下的所有菜品吗？", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         sidebarData.remove((int) position);
@@ -141,25 +126,29 @@ public class MenuFragment extends Fragment {
                 });
             }
         });
-
         // 添加分组按钮的点击事件
         addGroupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 使用第三方输入对话框
-                InputDialog.show(context, "增加分组", "给新的分组取个名字吧", new InputDialogOkButtonClickListener() {
+                InputDialog.show(context, "新建分组", "给新的分组取个名字吧！", new InputDialogOkButtonClickListener() {
                     @Override
                     public void onClick(Dialog dialog, String inputText) {
                         if (!inputText.equals("")) {
-                            // 增加一个分组
-                            sidebarData.add(inputText);
-                            sidebarAdapter.notifyItemInserted(sidebarData.size() - 1);
-                            // 网络请求，封装过的
-                            ServiceCreator.createService(UserService.class).addGroup(inputText)
-                                    .enqueue(new MCallback<Result>() {
+                            // 添加分组
+                            // 1. 网络请求
+                            dishService.addGroup(inputText)
+                                    .enqueue(new MCallback<GroupIDResult>() {
                                         @Override
-                                        public void onSuccess(Result result) {
-                                            Log.i(TAG, "onSuccess: 请求成功！添加的分组为："+inputText);
+                                        public void onSuccess(GroupIDResult result) {
+                                            String groupID = result.getGroupID();
+
+                                            // 2. 更新内存
+                                            GroupItem item = new GroupItem();
+                                            item.setId(groupID);
+                                            item.setName(inputText);
+                                            sidebarData.add(item);
+                                            sidebarAdapter.notifyItemInserted(sidebarData.size() - 1);
                                         }
                                     });
 
@@ -179,6 +168,7 @@ public class MenuFragment extends Fragment {
                             // 跳转菜品编辑页
                             Intent jumpIntent = new Intent(context, DishesEditingActivity.class);
                             jumpIntent.putExtra("dishName", inputText);
+                            jumpIntent.putExtra("function", "add");
                             startActivity(jumpIntent);
                         }
                     }
@@ -196,14 +186,16 @@ public class MenuFragment extends Fragment {
      *
      * @param groupId 侧边栏分组序号
      */
-    private void refreshDishesData(int groupId) {
+    private void refreshDishesData(String groupId) {
         dishesData.clear();
-        // dishesData = ...
-        dishesData.add(new Dish());
-        dishesData.add(new Dish());
-        dishesData.add(new Dish());
-
-        dishesAdapter.notifyDataSetChanged();
+        dishService.getDishesInGroup(groupId)
+                .enqueue(new MCallback<DishListResult>() {
+                    @Override
+                    public void onSuccess(DishListResult result) {
+                        dishesData.addAll(result.getDishList());
+                        dishesAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
 

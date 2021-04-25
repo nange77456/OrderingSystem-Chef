@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dss.orderingsystemforchef.network.results.GroupItem;
 import com.dss.orderingsystemforchef.util.phone.Phone1;
 import com.dss.orderingsystemforchef.util.UnitConvert;
 
@@ -17,20 +18,28 @@ import java.util.List;
  * 菜品页侧边栏，分类列表
  */
 public class SidebarAdapter extends RecyclerView.Adapter<SidebarAdapter.ViewHolder> {
-
     private final String TAG = "SidebarAdapter";
+    /**
+     * 数据集，通过构造函数传入
+     */
+    private List<GroupItem> dataList;
 
-    private List<String> dataList;
+    /**
+     * 初始状态选中第一项
+     */
+    private int selectedItem = 0;
 
-    private int selectedItem = -1;
-
-    public SidebarAdapter(List<String> dataList){
+    public SidebarAdapter(List<GroupItem> dataList){
         this.dataList = dataList;
     }
 
-    // 单击回调
+    /**
+     * 单击回调
+     */
     private Phone1<Integer> sidebarClickPhone;
-    // 长按回调
+    /**
+     * 长按回调
+     */
     private Phone1<Integer> sidebarLongClickPhone;
 
     public void setSidebarClickPhone(Phone1<Integer> sidebarClickPhone){
@@ -40,6 +49,9 @@ public class SidebarAdapter extends RecyclerView.Adapter<SidebarAdapter.ViewHold
         this.sidebarLongClickPhone = sidebarLongClickPhone;
     }
 
+    /**
+     * 子项 holder
+     */
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView textView;
         public ViewHolder(@NonNull View itemView) {
@@ -54,7 +66,6 @@ public class SidebarAdapter extends RecyclerView.Adapter<SidebarAdapter.ViewHold
         TextView textView = new TextView(parent.getContext());
         textView.setPadding(UnitConvert.dp2px(10),UnitConvert.dp2px(10)
                 ,UnitConvert.dp2px(10),UnitConvert.dp2px(10));
-//        textView.setBackgroundResource(R.drawable.ripple_red);
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                 , ViewGroup.LayoutParams.WRAP_CONTENT));
 
@@ -87,9 +98,9 @@ public class SidebarAdapter extends RecyclerView.Adapter<SidebarAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String item = dataList.get(position);
+        String item = dataList.get(position).getName();
         holder.textView.setText(item);
-        // 设置背景颜色
+        // 设置选中效果
         if (position == selectedItem) {
             holder.textView.setBackgroundColor(Color.WHITE);
         }else {

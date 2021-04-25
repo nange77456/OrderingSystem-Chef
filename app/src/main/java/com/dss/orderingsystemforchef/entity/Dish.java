@@ -1,5 +1,7 @@
 package com.dss.orderingsystemforchef.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -25,6 +27,7 @@ public class Dish {
     /**
      * 配料列表
      */
+    @SerializedName("ingredient")
     private List<Ingredient> ingredients;
     /**
      * 销售量
@@ -37,7 +40,8 @@ public class Dish {
     /**
      * 归属的分组id
      */
-    private int groupId;
+    @SerializedName("groupID")
+    private String groupId;
 
 
     public String getName() {
@@ -96,16 +100,16 @@ public class Dish {
         this.positiveRate = positiveRate;
     }
 
-    public int getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 
     /**
-     * 材料列表的子项
+     * 材料列表的子项，内部类
      */
     public static class Ingredient{
         /**
