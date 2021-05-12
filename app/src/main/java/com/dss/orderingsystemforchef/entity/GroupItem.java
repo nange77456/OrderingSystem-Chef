@@ -1,6 +1,8 @@
-package com.dss.orderingsystemforchef.network.results;
+package com.dss.orderingsystemforchef.entity;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * 一条分组信息，内部类

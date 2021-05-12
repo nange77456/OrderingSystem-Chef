@@ -22,6 +22,7 @@ public abstract class MCallback <T extends Result> implements Callback<T> {
         if(response.isSuccessful()){
             T result = response.body();
             if (result.getCode() == 200) {
+                Log.e(TAG,"onResponse:"+result.toString());
                 // 回调
                 onSuccess(result);
             }else {
@@ -49,6 +50,6 @@ public abstract class MCallback <T extends Result> implements Callback<T> {
      * @param result code不为200的响应结果
      */
     private void onError(T result){
-        Toast.makeText(MyApplication.context, "iOrder："+result.getMsg(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(MyApplication.context, result.getMsg(), Toast.LENGTH_SHORT).show();
     }
 }

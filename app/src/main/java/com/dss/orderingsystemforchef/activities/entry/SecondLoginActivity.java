@@ -95,7 +95,7 @@ public class SecondLoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
                         if (response.body().getCode() == 200) {
-                            Toast.makeText(SecondLoginActivity.this, "iOrder：登录成功！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SecondLoginActivity.this, "iOrder: 登录成功！", Toast.LENGTH_SHORT).show();
                             userID = response.body().getUserID();
                             Log.i(TAG, "onResponse: 登陆成功返回的用户id："+userID);
                             // 缓存用户id
@@ -106,7 +106,7 @@ public class SecondLoginActivity extends AppCompatActivity {
                             jumpIntent.putExtra("userID",userID);
                             startActivity(jumpIntent);
                         }else {
-                            Toast.makeText(SecondLoginActivity.this, "iOrder: "+response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SecondLoginActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -133,9 +133,9 @@ public class SecondLoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 if (response.body().getCode() == 200) {
-                    Toast.makeText(SecondLoginActivity.this, "iOder: 验证码发送成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SecondLoginActivity.this, "iOrder: 验证码发送成功!", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(SecondLoginActivity.this, "iOder: "+response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SecondLoginActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                 }
             }
 

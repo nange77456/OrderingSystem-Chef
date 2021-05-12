@@ -1,5 +1,6 @@
 package com.dss.orderingsystemforchef.network.results;
 
+import com.dss.orderingsystemforchef.entity.GroupItem;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

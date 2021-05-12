@@ -19,4 +19,6 @@
     <color name="grey_light">#FAF8F7</color>
     <color name="grey_ripple">#bdbdbd</color>
     <color name="default_text_color">#a0a0a0</color>
+    <color name="split_line">#e7e7e7</color>
+    <color name="bg_grey">#f0f0f0</color>
 </resources>

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.dss.orderingsystemforchef.adapter.ViewPagerAdapter;
@@ -14,8 +15,18 @@ import com.dss.orderingsystemforchef.fragments.FeedbackFragment;
 import com.dss.orderingsystemforchef.fragments.FlowFragment;
 import com.dss.orderingsystemforchef.fragments.MenuFragment;
 import com.dss.orderingsystemforchef.fragments.OrderFragment;
+import com.dss.orderingsystemforchef.util.FileUtil;
+import com.dss.orderingsystemforchef.util.GenerateUserSigUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.kongzue.dialog.v3.TipDialog;
+import com.tencent.imsdk.v2.V2TIMCallback;
+import com.tencent.imsdk.v2.V2TIMManager;
+import com.tencent.imsdk.v2.V2TIMSimpleMsgListener;
+import com.tencent.imsdk.v2.V2TIMUserInfo;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         ViewPager2 viewPager2 = findViewById(R.id.viewpager2);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        // 登录im
+        loginIM();
 
         //ViewPager2
         List<Fragment> fragmentList = initFragmentList();
@@ -104,4 +118,39 @@ public class MainActivity extends AppCompatActivity {
         fragmentList.add(new FeedbackFragment());
         return fragmentList;
     }
+
+    private void loginIM(){
+        V2TIMManager.getInstance().login(FileUtil.getUserID(), GenerateUserSigUtil.genTestUserSig(FileUtil.getUserID())
+                , new V2TIMCallback() {
+                    @Override
+                    public void onError(int code, String desc) {
+                        TipDialog.show(MainActivity.this,"IM登录失败，请重启应用",TipDialog.TYPE.ERROR)
+                        .setTipTime(5000);
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Log.e("tag","IM登录成功");
+                        setIMListener();
+                    }
+                });
+    }
+
+    private void setIMListener(){
+        V2TIMManager.getInstance().addSimpleMsgListener(new V2TIMSimpleMsgListener() {
+            @Override
+            public void onRecvC2CCustomMessage(String msgID, V2TIMUserInfo sender, byte[] customData) {
+                String msg = new String(customData, StandardCharsets.UTF_8);
+                Gson gson = new Gson();
+                if(msg.startsWith("newOrder:")){
+                    // 新订单
+
+                }else if(msg.startsWith("newSuggestion:")){
+                    // 新反馈
+
+                }
+            }
+        });
+    }
+
 }

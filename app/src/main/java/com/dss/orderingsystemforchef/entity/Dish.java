@@ -2,12 +2,18 @@ package com.dss.orderingsystemforchef.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 一道菜
  */
-public class Dish {
+public class Dish implements Serializable {
+    /**
+     * 数据库中的id
+     */
+    @SerializedName("_id")
+    private String id;
     /**
      * 菜品名字
      */
@@ -15,6 +21,7 @@ public class Dish {
     /**
      * 图片url
      */
+    @SerializedName("pic")
     private String picUrl;
     /**
      * 菜品描述
@@ -33,6 +40,10 @@ public class Dish {
      * 销售量
      */
     private int sales;
+    /**
+     * 库存
+     */
+//    private int stock;
     /**
      * 好评率
      */
@@ -108,10 +119,26 @@ public class Dish {
         this.groupId = groupId;
     }
 
+    /*public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }*/
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     /**
      * 材料列表的子项，内部类
      */
-    public static class Ingredient{
+    public static class Ingredient implements Serializable{
         /**
          * 材料名称
          */

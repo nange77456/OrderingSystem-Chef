@@ -52,7 +52,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Dish.Ingredient item = dataList.get(position);
-        holder.positionView.setText("【"+(position+1)+"】");
+        holder.positionView.setText("（"+(position+1)+"）");
         holder.nameView.setText(item.getInName());
         holder.unitView.setText(item.getInUnit());
         holder.needView.setText(item.getInNeed()+"");

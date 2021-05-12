@@ -19,16 +19,24 @@
             app:layout_constraintTop_toTopOf="parent"
             app:title="编辑菜品" />
 
-        <ImageView
-            android:id="@+id/img"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/imgCard"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/ripple_grey"
-            android:clickable="true"
+            app:cardCornerRadius="5dp"
             app:layout_constraintStart_toStartOf="@+id/nameLayout"
-            app:layout_constraintTop_toBottomOf="@+id/nameLayout"
-            app:srcCompat="@drawable/youaredog" />
+            app:layout_constraintTop_toBottomOf="@+id/nameLayout">
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/youaredog" />
+        </com.google.android.material.card.MaterialCardView>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nameLayout"
@@ -58,13 +66,14 @@
             android:hint="分组"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="@+id/nameLayout"
-            app:layout_constraintStart_toEndOf="@+id/img"
-            app:layout_constraintTop_toTopOf="@+id/img">
+            app:layout_constraintStart_toEndOf="@+id/imgCard"
+            app:layout_constraintTop_toTopOf="@+id/imgCard">
 
             <AutoCompleteTextView
                 android:id="@+id/groupName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:ellipsize="none"
                 android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,7 +84,7 @@
             android:layout_height="wrap_content"
             android:hint="单价"
             app:errorEnabled="true"
-            app:layout_constraintBottom_toBottomOf="@+id/img"
+            app:layout_constraintBottom_toBottomOf="@+id/imgCard"
             app:layout_constraintEnd_toEndOf="@+id/nameLayout"
             app:layout_constraintStart_toStartOf="@+id/groupLayout"
             app:startIconDrawable="@drawable/ic_rmb">
@@ -95,8 +104,8 @@
             android:text="销售量"
             android:textColor="@color/grey_ripple"
             android:textSize="10sp"
-            app:layout_constraintStart_toStartOf="@+id/img"
-            app:layout_constraintTop_toBottomOf="@+id/img" />
+            app:layout_constraintStart_toStartOf="@+id/imgCard"
+            app:layout_constraintTop_toBottomOf="@+id/imgCard" />
 
         <TextView
             android:id="@+id/posEvaluation"
@@ -107,8 +116,8 @@
             android:text="好评度"
             android:textColor="@color/grey_ripple"
             android:textSize="10sp"
-            app:layout_constraintStart_toStartOf="@+id/img"
-            app:layout_constraintTop_toBottomOf="@+id/img" />
+            app:layout_constraintStart_toStartOf="@+id/imgCard"
+            app:layout_constraintTop_toBottomOf="@+id/imgCard" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/descriptionLayout"
@@ -143,7 +152,7 @@
         android:id="@+id/ingredientsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/ripple_grey"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingTop="10dp"
@@ -170,7 +179,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/addBtn"
+            android:id="@+id/inAddBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_add" />
@@ -191,7 +200,7 @@
         android:id="@+id/processTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/ripple_grey"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingTop="10dp"
@@ -218,7 +227,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/addBtn2"
+            android:id="@+id/proAddBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_add" />
@@ -229,12 +238,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="64dp"/>
+
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/submitBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="64dp"
-        android:text="确认添加"/>
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="确认添加"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/theme_variant"
+        app:cornerRadius="60dp" />
 
 
 </com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout>

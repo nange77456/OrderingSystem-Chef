@@ -13,6 +13,10 @@ android {
         versionCode 1
         versionName "1.0"
 
+        ndk {
+            abiFilters "arm64-v8a"
+        }
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -49,9 +53,28 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'    // 网络请求框架
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'    // Gson转换器
+    implementation 'com.qw:coco:1.1.2'    // 系统相册选择器
+    implementation 'com.tencent.imsdk:imsdk:5.1.50'  // 腾讯IM
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6' // 简化RecyclerView适配器使用
+
+    // -------------------------
+    // jetpack 相关
+    def lifecycle_version = "2.3.0"
+    def arch_version = "2.1.0"
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    // Annotation processor
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    // -------------------------
+    
 
 //    控件
-    implementation 'com.kongzue.dialog:dialog:2.1.0'    // 带输入的对话框
+    implementation 'com.kongzue.dialog_v3:dialog:3.2.4'    // 对话框合辑
     implementation 'com.github.cirno-poi:VerifyEditText:1.0.0'    // 手机验证码输入框
     implementation 'com.github.donkingliang:ConsecutiveScroller:4.4.1'    // 可持续滑动布局
 }

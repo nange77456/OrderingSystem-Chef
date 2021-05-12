@@ -55,4 +55,14 @@
             android:textColor="@color/amber_a700"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dishesList"
+        app:layout_constraintStart_toEndOf="@+id/sideBar"
+        app:layout_constraintTop_toTopOf="@+id/dishesList" />
 </androidx.constraintlayout.widget.ConstraintLayout>

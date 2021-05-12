@@ -9,6 +9,7 @@ import com.dss.orderingsystemforchef.network.results.Result;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -22,8 +23,9 @@ import retrofit2.http.Query;
  */
 public interface DishService {
 
-            /**
+    /**
      * 新建分组
+     *
      * @param name 分组名
      * @return 分组id
      */
@@ -32,7 +34,18 @@ public interface DishService {
     Call<GroupIDResult> addGroup(@Field("name") String name);
 
     /**
+     * 添加菜品
+     *
+     * @return
+     */
+    @Multipart
+    @POST("/dish/add")
+    Call<Result> addDish(@Part("dish") Dish dish, @Part MultipartBody.Part img);
+
+
+    /**
      * 获取所有分组
+     *
      * @return
      */
     @GET("/dish/group/get")
@@ -40,18 +53,38 @@ public interface DishService {
 
     /**
      * 获取某个分组下的所有菜品
+     *
      * @param groupID
      * @return
      */
     @GET("/dish/get")
     Call<DishListResult> getDishesInGroup(@Query("groupID") String groupID);
 
+
     /**
-     * 添加菜品
+     * 删除菜品
+     * @param dishID
+     * @return
+     */
+    @DELETE("/dish/delete")
+    Call<Result> deleteDish(@Query("dishID") String dishID);
+
+    /**
+     * 删除分组
+     * @param groupID
+     * @return
+     */
+    @DELETE("/dish/group/delete")
+    Call<Result> deleteGroup(@Query("groupID") String groupID);
+
+    /**
+     * 修改菜品
+     * @param dish
+     * @param img
      * @return
      */
     @Multipart
-    @POST("/dish/add")
-    Call<Result> addDish(@Part("dish") Dish dish, @Part MultipartBody.Part img);
+    @POST("/dish/modify")
+    Call<Result> modifyDish(@Part("dish") Dish dish, @Part MultipartBody.Part img);
 
 }

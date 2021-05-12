@@ -1,5 +1,7 @@
 package com.dss.orderingsystemforchef.network;
 
+import com.dss.orderingsystemforchef.util.NetworkUtil;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,10 +17,11 @@ public class ServiceCreator {
             .addInterceptor(new CookieInterceptor())
             .build();
 
+
     private static Retrofit retrofit = new Retrofit.Builder()
             // 加 Cookie 拦截器
             .client(client)
-            .baseUrl("http://8.129.24.81:5001")
+            .baseUrl(NetworkUtil.BASE_URL)
             // 加 gson 解析器
             .addConverterFactory(GsonConverterFactory.create())
             .build();

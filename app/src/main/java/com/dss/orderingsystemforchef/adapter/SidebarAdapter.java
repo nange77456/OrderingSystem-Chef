@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dss.orderingsystemforchef.network.results.GroupItem;
+import com.dss.orderingsystemforchef.entity.GroupItem;
 import com.dss.orderingsystemforchef.util.phone.Phone1;
 import com.dss.orderingsystemforchef.util.UnitConvert;
 
