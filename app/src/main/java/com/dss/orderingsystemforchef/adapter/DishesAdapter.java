@@ -1,6 +1,5 @@
 package com.dss.orderingsystemforchef.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.dss.orderingsystemforchef.R;
 import com.dss.orderingsystemforchef.entity.Dish;
-import com.dss.orderingsystemforchef.util.NetworkUtil;
+import com.dss.orderingsystemforchef.network.simplify.NetworkUtil;
 import com.dss.orderingsystemforchef.util.phone.Phone1;
 
 import java.util.List;

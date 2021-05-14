@@ -17,11 +17,11 @@ import com.dss.orderingsystemforchef.adapter.IngredientsAdapter;
 import com.dss.orderingsystemforchef.databinding.ActivityDishesEditingBinding;
 import com.dss.orderingsystemforchef.entity.Dish;
 import com.dss.orderingsystemforchef.network.DishService;
-import com.dss.orderingsystemforchef.network.MCallback;
-import com.dss.orderingsystemforchef.network.ServiceCreator;
+import com.dss.orderingsystemforchef.network.simplify.MCallback;
+import com.dss.orderingsystemforchef.network.simplify.ServiceCreator;
 import com.dss.orderingsystemforchef.entity.GroupItem;
 import com.dss.orderingsystemforchef.network.results.Result;
-import com.dss.orderingsystemforchef.util.NetworkUtil;
+import com.dss.orderingsystemforchef.network.simplify.NetworkUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kongzue.dialog.v3.CustomDialog;
@@ -42,7 +42,6 @@ import okhttp3.RequestBody;
 import okio.BufferedSink;
 import okio.Okio;
 import okio.Source;
-import retrofit2.Callback;
 
 /**
  * 菜品编辑页

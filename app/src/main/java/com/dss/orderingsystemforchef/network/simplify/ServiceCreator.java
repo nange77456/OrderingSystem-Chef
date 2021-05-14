@@ -1,6 +1,4 @@
-package com.dss.orderingsystemforchef.network;
-
-import com.dss.orderingsystemforchef.util.NetworkUtil;
+package com.dss.orderingsystemforchef.network.simplify;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

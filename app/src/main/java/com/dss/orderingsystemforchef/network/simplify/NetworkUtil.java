@@ -1,4 +1,4 @@
-package com.dss.orderingsystemforchef.util;
+package com.dss.orderingsystemforchef.network.simplify;
 
 /**
  * 网络工具类

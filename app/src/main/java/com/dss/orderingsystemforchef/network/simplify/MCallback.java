@@ -1,4 +1,4 @@
-package com.dss.orderingsystemforchef.network;
+package com.dss.orderingsystemforchef.network.simplify;
 
 import android.util.Log;
 import android.widget.Toast;

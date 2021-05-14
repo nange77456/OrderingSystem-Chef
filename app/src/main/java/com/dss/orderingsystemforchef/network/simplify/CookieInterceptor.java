@@ -1,4 +1,4 @@
-package com.dss.orderingsystemforchef.network;
+package com.dss.orderingsystemforchef.network.simplify;
 
 import com.dss.orderingsystemforchef.util.FileUtil;
 

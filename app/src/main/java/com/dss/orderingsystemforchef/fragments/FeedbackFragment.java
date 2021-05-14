@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dss.orderingsystemforchef.R;
 import com.dss.orderingsystemforchef.adapter.SuggestionAdapter;
 import com.dss.orderingsystemforchef.customview.ProgressView;
-import com.dss.orderingsystemforchef.network.MCallback;
-import com.dss.orderingsystemforchef.network.ServiceCreator;
+import com.dss.orderingsystemforchef.network.simplify.MCallback;
+import com.dss.orderingsystemforchef.network.simplify.ServiceCreator;
 import com.dss.orderingsystemforchef.network.SuggestionService;
 import com.dss.orderingsystemforchef.network.results.SuggestionResult;
 

@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.dss.orderingsystemforchef.R;
 import com.dss.orderingsystemforchef.adapter.OrderAdapter;
 import com.dss.orderingsystemforchef.adapter.SuggestionAdapter;
@@ -22,6 +24,7 @@ import com.dss.orderingsystemforchef.databinding.FragmentOrderBinding;
 import com.dss.orderingsystemforchef.entity.Order;
 import com.dss.orderingsystemforchef.fragments.viewmodel.OrderViewModel;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class OrderFragment extends Fragment {
@@ -46,7 +49,7 @@ public class OrderFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 
-        // ViewModel
+        // 创建 ViewModel
         viewModel = new ViewModelProvider(requireActivity()).get(OrderViewModel.class);
 
         // recyclerview 基本设置
@@ -55,14 +58,19 @@ public class OrderFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // 网络请求填充数据到视图
-        Log.e(TAG, "onViewCreated: hhhhha28" );
         viewModel.orderData.observe(getViewLifecycleOwner(), new Observer<List<Order>>() {
             @Override
             public void onChanged(List<Order> orders) {
-                // BaseQuickAdapter 绑定数据类的方法
-                orderAdapter.setNewInstance(orders);
+                // BaseQuickAdapter 绑定数据的方法
+                orderAdapter.setNewInstance(new LinkedList<>(orders));
+            }
+        });
 
-                Log.e(TAG, "onChanged: 有数据啦："+orders );
+        // 出餐按钮点击事件
+        orderAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                viewModel.requestFinishOrder(position);
             }
         });
 

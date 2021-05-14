@@ -17,7 +17,7 @@ import com.dss.orderingsystemforchef.network.results.LoginResult;
 import com.dss.orderingsystemforchef.network.results.Result;
 import com.dss.orderingsystemforchef.network.UserService;
 import com.dss.orderingsystemforchef.util.FileUtil;
-import com.dss.orderingsystemforchef.network.ServiceCreator;
+import com.dss.orderingsystemforchef.network.simplify.ServiceCreator;
 import com.github.cirno_poi.verifyedittextlibrary.VerifyEditText;
 
 import retrofit2.Call;
@@ -105,6 +105,9 @@ public class SecondLoginActivity extends AppCompatActivity {
                             Intent jumpIntent = new Intent(SecondLoginActivity.this, MainActivity.class);
                             jumpIntent.putExtra("userID",userID);
                             startActivity(jumpIntent);
+
+                            finish();    // 跳转后销毁登录页面
+
                         }else {
                             Toast.makeText(SecondLoginActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }

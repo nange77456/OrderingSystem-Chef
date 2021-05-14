@@ -8,7 +8,16 @@ import java.util.List;
  * 订单
  */
 public class Order {
+    /**
+     * 订单id
+     */
     private String _id;
+
+    /**
+     * 订单的顾客id
+     */
+    private String customerID;
+
     /**
      * 取餐码
      */
@@ -33,10 +42,20 @@ public class Order {
     @SerializedName("cost")
     private float totalPrice;
 
+
+
     /**
      * 订单状态
      */
     private int status;
+
+    public String getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
+    }
 
     public String get_id() {
         return _id;
