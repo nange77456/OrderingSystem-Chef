@@ -1,0 +1,51 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+:商家: as merchant
+:顾客: as customer
+
+left to right direction
+
+'rectangle 智能点餐系统 {
+    (接收新订单) as receiveOrder
+    (接收反馈) as receiveSuggestion
+    (发送取餐提醒) as inform
+    (菜品管理) as dishManage
+    (菜品上架) as dishManage1
+    (菜品下架) as dishManage2
+    (菜品修改) as dishManage3
+    (获取每日营收统计) as revenue
+    (登录注册) as (login)
+
+    (加入购物车) as cart
+    (支付) as pay
+    (接收取餐提醒) as beInformed
+    (发送反馈) as suggest
+    (切换商家) as switchMerchant
+    (查看历史订单) as orderHistory
+'}
+
+
+
+
+'merchant -- (login)
+'merchant -- inform
+'merchant -- receiveOrder
+'merchant -- receiveSuggestion
+'merchant -- dishManage
+dishManage ..> dishManage1 : <<include>>
+dishManage ..> dishManage2 : <<include>>
+dishManage ..> dishManage3 : <<include>>
+'merchant -- revenue
+
+
+'customer -- (login)
+'customer -- beInformed
+'customer -- cart
+'customer -- pay
+'customer -- suggest
+'customer -- switchMerchant
+'customer -- orderHistory
+
+
+@enduml

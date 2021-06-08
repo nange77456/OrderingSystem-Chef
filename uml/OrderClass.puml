@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+class Order{
+    -id : String
+    -customerID : String
+    -takeFoodCode : String
+    -createTime : long
+    -finishTime : long
+    -dishData : List<OrderDishDetail>
+    -totalPrice : float
+}
+
+class OrderDishDetail{
+    -dish : Dish
+    -num : int
+}
+
+class OrderViewModel{
+    +orderData : MutableLiveData<List<Order>>
+    +requestOrderData() : void
+    +requestFinishOrder() : void
+    +sendTakeFoodMsg() : void
+}
+
+class OrderFragment{
+    -viewModel : OrderViewModel
+    -adapter : OrderAdapter
+    +requestOrderData() : List<Order>
+    +requestFinishOrder() : int
+}
+
+abstract class ViewModel
+
+OrderFragment --> OrderAdapter
+OrderAdapter "1"-->"*" Order
+OrderFragment --> OrderViewModel
+OrderViewModel --> MutableLiveData
+MutableLiveData "1"-->"*" Order
+OrderViewModel --|> ViewModel
+Order "1"-->"*" OrderDishDetail
+
+@enduml

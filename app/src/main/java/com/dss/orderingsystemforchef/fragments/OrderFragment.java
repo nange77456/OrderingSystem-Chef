@@ -62,7 +62,7 @@ public class OrderFragment extends Fragment {
             @Override
             public void onChanged(List<Order> orders) {
                 // BaseQuickAdapter 绑定数据的方法
-                orderAdapter.setNewInstance(new LinkedList<>(orders));
+                    orderAdapter.setNewInstance(new LinkedList<>(orders));
             }
         });
 

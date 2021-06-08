@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam ClassAttributeIconSize 0
+
+abstract class OkCallback{
+    +onSuccess() : void
+    +onError() : void
+}
+
+interface Callback{
+    +onResponse() : void
+    +onFailure() : void
+}
+
+OkCallback ..|> Callback
+
+@enduml

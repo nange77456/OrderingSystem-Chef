@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+class Result{
+    -code : String
+    -msg : String
+}
+
+class LoginResult{
+    -userID : String
+}
+
+class OrderResult{
+    -orderData : List<Order>
+}
+
+class SuggestionResult{
+    -suggestionData : List<Suggestion>
+}
+
+class DishResult{
+    -dishData : List<Dish>
+}
+
+Result <|-- LoginResult
+Result <|-- OrderResult
+Result <|-- DishResult
+Result <|-- SuggestionResult
+
+interface DishService{
+    +addGroup() : Call<GroupIDResult>
+    +addDish() : Call<Result>
+    +getAllGroup() : Call<GroupListResult>
+    +getDishesInGroup() : Call<DishListResult>
+    +deleteDish() : Call<Result>
+    +deleteGroup() : Call<Result>
+    +modifyDish() : Call<Result>
+}
+
+interface OrderService{
+    +getOrders() : Call<OrderResult>
+    +finishOrder() : Call<Result>
+}
+
+interface SuggestionService{
+    +getSuggestions() : Call<SuggestionResult>
+}
+
+interface UserService{
+    +getCaptcha() : Call<Result>
+    +login() : Call<LoginResult>
+    +logout() : Call<LoginResult>
+}
+
+Call ..> Result
+SuggestionService ..> Call
+DishService ..> Call
+OrderService ..> Call
+UserService ..> Call
+
+
+@enduml

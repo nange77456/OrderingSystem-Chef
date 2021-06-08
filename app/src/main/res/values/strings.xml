@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Ordering System for Chef</string>
-    <!--    <string name="app_name">点餐系统厨师端</string>-->
+    <string name="app_name">智能点餐厨师端</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>

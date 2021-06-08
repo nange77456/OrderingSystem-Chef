@@ -1,0 +1,50 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+class Dish{
+    -id : String;
+    -name : String;
+    -picUrl : String;
+    -description : String;
+    -price : float;
+    -ingredients : List<Ingredient>;
+    -sales : int;
+    -stock:int;
+    -positiveRate : float;
+    -groupId : String;
+}
+
+class Group{
+    -id : String;
+    -name : String;
+}
+
+class DishesAdapter
+class GroupAdapter
+
+class MenuFragment{
+    -dishData : LinkedList<Dish>
+    -groupData : LinkedList<Group>
+
+    -switchGroup() : void
+    -deleteGroup() : void
+    -editDish() : void
+    -deleteDish() : void
+    -displayDishes() : void
+    -displayGroups() : void
+    -addDish() : Dish
+    -addGroup() : Group
+}
+
+MenuFragment "1"-->"*" Dish
+MenuFragment "1"-->"*" Group
+DishesAdapter "1"-->"*" Dish
+GroupAdapter "1"-->"*" Group
+MenuFragment --> DishesAdapter
+MenuFragment --> GroupAdapter
+
+Dish -- Group
+
+
+@enduml

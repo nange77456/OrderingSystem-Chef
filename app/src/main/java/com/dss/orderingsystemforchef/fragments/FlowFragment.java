@@ -45,17 +45,17 @@ public class FlowFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MessageDialog.show((AppCompatActivity) getActivity(),"退出登录", "确定退出登录吗？","确定")
-                        .setOnOkButtonClickListener(new OnDialogButtonClickListener() {
-                            @Override
-                            public boolean onClick(BaseDialog baseDialog, View v) {
-                                FileUtil.deleteUserID(FileUtil.getUserID());
-                                Intent jumpIntent = new Intent(getActivity(), EntryActivity.class);
-                                startActivity(jumpIntent);
-                                getActivity().finish();
-                                return true;
-                            }
-                        });
+//                MessageDialog.show((AppCompatActivity) getActivity(),"退出登录", "确定退出登录吗？","确定")
+//                        .setOnOkButtonClickListener(new OnDialogButtonClickListener() {
+//                            @Override
+//                            public boolean onClick(BaseDialog baseDialog, View v) {
+//                                FileUtil.deleteUserID(FileUtil.getUserID());
+//                                Intent jumpIntent = new Intent(getActivity(), EntryActivity.class);
+//                                startActivity(jumpIntent);
+//                                getActivity().finish();
+//                                return true;
+//                            }
+//                        });
             }
         });
 
