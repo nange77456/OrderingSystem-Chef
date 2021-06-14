@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         List<Fragment> fragmentList = initFragmentList();
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle(), fragmentList);
         viewPager2.setAdapter(viewPagerAdapter);
+        viewPager2.setUserInputEnabled(false);
 
         //底部导航栏和ViewPager互相绑定
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -7,6 +7,6 @@ public class NetworkUtil {
     /**
      * 网络请求用到的baseurl
      */
-    public static final String BASE_URL = "http://8.129.24.81:5001";
+    public static final String BASE_URL = "http://inaction.fun:22222";
 
 }
