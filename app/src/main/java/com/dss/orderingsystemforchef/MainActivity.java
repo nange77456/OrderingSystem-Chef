@@ -6,10 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
+import com.dss.orderingsystemforchef.activities.entry.EntryActivity;
 import com.dss.orderingsystemforchef.adapter.ViewPagerAdapter;
 import com.dss.orderingsystemforchef.fragments.FeedbackFragment;
 import com.dss.orderingsystemforchef.fragments.FlowFragment;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         ViewPager2 viewPager2 = findViewById(R.id.viewpager2);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
 
         // 登录im
         loginIM();
@@ -105,6 +110,38 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.restaurantCode:{
+                Intent intent = new Intent(this,RestaurantCodeActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.exit_menu:{
+                exist();
+                break;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 退出登录
+     */
+    private void exist() {
+        FileUtil.deleteUserID(FileUtil.getUserID());
+        Intent jumpIntent = new Intent(this, EntryActivity.class);
+        startActivity(jumpIntent);
+        finish();
     }
 
     /**

@@ -204,15 +204,7 @@ public class FlowFragment extends Fragment {
         viewModel.getStatisticsData();
     }
 
-    /**
-     * 退出登录
-     */
-    private void exist() {
-        FileUtil.deleteUserID(FileUtil.getUserID());
-        Intent jumpIntent = new Intent(getActivity(), EntryActivity.class);
-        startActivity(jumpIntent);
-        getActivity().finish();
-    }
+
 
     @Override
     public void onDestroyView() {
